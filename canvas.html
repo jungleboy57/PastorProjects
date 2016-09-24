@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var colores = ["red", "blue", "green"];
+index = 0;
+
+function showCoords(event) {
+    //console.log(event);
+	var x = event.clientX;
+    var y = event.clientY;
+    document.getElementById("mouse_position").innerHTML = "X coords: " + x + ", Y coords: " + y;
+}
+
+function clearCoor(event) {
+    //console.log(event);
+	document.getElementById("mouse_position").innerHTML = "";
+}
+
+function drawShape(event){
+	var x = event.clientX;
+	var y = event.clientY;
+	var canvas = document.getElementById("myCanvas");
+    var ctx=canvas.getContext("2d");
+	var circle = document.getElementById("circle");
+	var sqaure = document.getElementById("square");
+	var traingle = document.getElementById("traingle");
+	console.log(circle.checked + " " + square.checked);
+	if (circle.checked == true) {
+		ctx.beginPath();
+		ctx.arc(x,y,25,0,2*Math.PI);
+		ctx.closePath();
+		ctx.fillStyle = colores[index];
+		ctx.fill();
+	  }
+	if (square.checked == true) {
+	    ctx.fillStyle = colores[index];
+		ctx.fillRect(x,y,50,50);
+		
+		
+		
+	  }
+	if (triangle.checked == true) {
+		ctx.beginPath();
+		ctx.moveTo(x,y);
+		ctx.lineTo(x+50,y)
+		ctx.lineTo(x,y+50)
+		ctx.strokeStyle= colores[index];
+		ctx.closePath();
+	
+		ctx.stroke();
+	  }
+	  index ++
+	  if (index ==3){
+	  index = 0;
+	  }
+	  
+	  
+}
+
+function clearCanvas(){
+       var canvas = document.getElementById("myCanvas");
+	   var ctx=canvas.getContext("2d");
+	    ctx.fillStyle = "white";
+		ctx.fillRect(0,0,1500,1500);
+}
+</script>
+</head>
+<body>
+
+<canvas onclick="drawShape(event)" onmousemove="showCoords(event)" onmouseout="clearCoor(event)" id="myCanvas" width="500" height="500" style="border:1px solid #000000;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<form action="">
+  <input type="radio" id="circle" name="shape" value="circle" checked="checked">Circle<br>
+  <input type="radio" id="square" name="shape" value="square">Square<br>
+  <input type="radio" id="triangle" name="shape" value="triangle">Triangle
+</form>
+
+<button type="button" onclick="clearCanvas()">Clear Canvas</button>
+
+<div id="mouse_position"></div>
+
+</body>
+</html>
